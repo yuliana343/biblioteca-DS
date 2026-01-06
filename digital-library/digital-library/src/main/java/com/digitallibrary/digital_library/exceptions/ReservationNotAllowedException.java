@@ -3,7 +3,7 @@ package com.digitallibrary.digital_library.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.CONFLICT) // Cambié a CONFLICT para coincidir con tu handler
+@ResponseStatus(HttpStatus.CONFLICT)  
 public class ReservationNotAllowedException extends RuntimeException {
     
     public ReservationNotAllowedException() {
