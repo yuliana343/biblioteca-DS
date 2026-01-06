@@ -1,0 +1,1251 @@
+/* frontend/src/components/loans/Loans.css */
+
+/* ===== Estilos generales para préstamos ===== */
+.active-loans,
+.loan-history {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.loans-header,
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.header-left h2 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.subtitle {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Estadísticas */
+.loans-stats,
+.history-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #4fc3f7;
+  transition: transform 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  font-size: 24px;
+  margin-right: 16px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.stat-icon.success { background: #e8f5e9; color: #4caf50; }
+.stat-icon.warning { background: #fff3e0; color: #ff9800; }
+.stat-icon.error { background: #ffebee; color: #f44336; }
+.stat-icon.info { background: #e3f2fd; color: #2196f3; }
+.stat-icon.primary { background: #e1f5fe; color: #4fc3f7; }
+
+.stat-info {
+  flex: 1;
+}
+
+.stat-value {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* Controles */
+.loans-controls,
+.history-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.controls-left,
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Filtros */
+.filter-buttons {
+  display: flex;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.filter-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn.active {
+  background: white;
+  color: #4fc3f7;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Búsqueda */
+.search-box {
+  position: relative;
+}
+
+.search-input {
+  padding: 8px 35px 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 250px;
+  transition: border 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+/* Select */
+.sort-select,
+.range-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  min-width: 200px;
+}
+
+/* Rango de tiempo */
+.time-range {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.custom-dates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.date-separator {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Tablas */
+.loans-table-container,
+.history-table-container {
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.loans-table,
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.loans-table th,
+.history-table th {
+  background: #f9f9f9;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  white-space: nowrap;
+}
+
+.loans-table td,
+.history-table td {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.loans-table tbody tr:hover,
+.history-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* Celdas especiales */
+.book-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.book-cover-small {
+  width: 50px;
+  height: 70px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.book-cover-placeholder-small {
+  width: 50px;
+  height: 70px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.book-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.book-details strong {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.book-details small {
+  color: #666;
+  font-size: 12px;
+}
+
+.user-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4fc3f7, #29b6f6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-details strong {
+  color: #333;
+  font-size: 14px;
+}
+
+.user-details small {
+  color: #666;
+  font-size: 12px;
+}
+
+/* Celdas de fecha */
+.date-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.date {
+  font-weight: 500;
+  color: #333;
+}
+
+.date.overdue {
+  color: #f44336;
+}
+
+.date-ago,
+.returned {
+  font-size: 12px;
+  color: #888;
+}
+
+.returned {
+  color: #4caf50;
+}
+
+/* Badges */
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.badge-success {
+  background: #e8f5e9;
+  color: #4caf50;
+  border: 1px solid #a5d6a7;
+}
+
+.badge-error {
+  background: #ffebee;
+  color: #f44336;
+  border: 1px solid #ef9a9a;
+}
+
+.badge-warning {
+  background: #fff3e0;
+  color: #ff9800;
+  border: 1px solid #ffcc80;
+}
+
+.badge-info {
+  background: #e3f2fd;
+  color: #2196f3;
+  border: 1px solid #90caf9;
+}
+
+.badge-secondary {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #e0e0e0;
+}
+
+/* Texto con colores */
+.text-error { color: #f44336; }
+.text-warning { color: #ff9800; }
+.text-success { color: #4caf50; }
+
+/* Celdas de renovación */
+.renewals-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.renewals-count {
+  font-weight: 600;
+  color: #333;
+}
+
+.renewals-limit {
+  font-size: 11px;
+  color: #f44336;
+}
+
+/* Celdas de multa */
+.fine-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fine-amount {
+  font-weight: 600;
+  color: #f44336;
+}
+
+.fine-calc {
+  font-size: 11px;
+  color: #ff9800;
+  font-style: italic;
+}
+
+.no-fine {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.btn {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 11px;
+  min-width: 32px;
+}
+
+.btn-primary {
+  background: #4fc3f7;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #29b6f6;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: white;
+  color: #4fc3f7;
+  border: 1px solid #4fc3f7;
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: #f0f9ff;
+}
+
+.btn-success {
+  background: #4caf50;
+  color: white;
+  border: none;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #388e3c;
+}
+
+.btn-warning {
+  background: #ff9800;
+  color: white;
+  border: none;
+}
+
+.btn-warning:hover:not(:disabled) {
+  background: #f57c00;
+}
+
+.btn-danger {
+  background: #f44336;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #d32f2f;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-icon {
+  font-size: 12px;
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Estados vacíos */
+.empty-state {
+  padding: 48px 24px;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 2px dashed #ddd;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #999;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px 0;
+  color: #666;
+}
+
+.empty-state p {
+  margin: 0 0 16px 0;
+  color: #888;
+}
+
+/* Errores */
+.loans-error,
+.history-error {
+  padding: 48px 24px;
+  text-align: center;
+  background: #fff5f5;
+  border-radius: 8px;
+  border: 1px solid #fcc;
+}
+
+.error-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #f44336;
+}
+
+.loans-error h3,
+.history-error h3 {
+  margin: 0 0 8px 0;
+  color: #c00;
+}
+
+.loans-error p,
+.history-error p {
+  margin: 0 0 16px 0;
+  color: #666;
+}
+
+/* Footer de préstamos */
+.loans-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-stats {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-stat .stat-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.footer-stat .stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ===== Historial específico ===== */
+.period-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.period-cell strong {
+  color: #666;
+  margin-right: 4px;
+}
+
+.duration-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.duration-days {
+  font-weight: 600;
+  color: #333;
+}
+
+.duration-status {
+  font-size: 11px;
+  color: #888;
+}
+
+.rating-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rating-stars {
+  color: #ffc107;
+  font-size: 14px;
+}
+
+.btn-rate {
+  padding: 4px 8px;
+  background: #4fc3f7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-rate:hover {
+  background: #29b6f6;
+}
+
+.fine-paid {
+  font-weight: 600;
+  color: #4caf50;
+}
+
+.fine-date {
+  font-size: 11px;
+  color: #888;
+}
+
+/* Paginación */
+.history-pagination {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+/* Resumen del historial */
+.history-summary {
+  margin-top: 24px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.summary-section h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 4px;
+  border-left: 3px solid #4fc3f7;
+}
+
+.summary-label {
+  color: #666;
+  font-size: 13px;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: #333;
+}
+
+.summary-value.highlight {
+  color: #4fc3f7;
+}
+
+.summary-value.fine {
+  color: #f44336;
+}
+
+.summary-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* ===== Modal de Renovación ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-container {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background: white;
+  border-radius: 12px 12px 0 0;
+  z-index: 1;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.modal-close:hover:not(:disabled) {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.modal-content {
+  padding: 20px;
+}
+
+/* Información del préstamo */
+.loan-info {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.info-header {
+  margin-bottom: 16px;
+}
+
+.info-header h4 {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-weight: 500;
+  color: #333;
+}
+
+.info-value.overdue {
+  color: #f44336;
+}
+
+.overdue-badge {
+  font-size: 11px;
+  color: #f44336;
+  margin-left: 8px;
+}
+
+/* Formulario de renovación */
+.renewal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Opciones de días */
+.days-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.days-option {
+  position: relative;
+}
+
+.days-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.days-option label {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  background: #f5f5f5;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  gap: 8px;
+}
+
+.days-option input[type="radio"]:checked + label {
+  background: #e1f5fe;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+}
+
+.days-option input[type="radio"]:disabled + label {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.option-label {
+  font-weight: 500;
+  color: #333;
+}
+
+.option-date {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Días personalizados */
+.custom-days {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #444;
+  font-size: 14px;
+}
+
+.custom-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.days-input {
+  padding: 8px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 80px;
+  transition: border 0.3s;
+}
+
+.days-input:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+}
+
+.input-suffix {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Selector de fecha */
+.date-picker {
+  margin-bottom: 20px;
+}
+
+.date-input {
+  padding: 8px 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  transition: border 0.3s;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #4fc3f7;
+  box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+}
+
+/* Resumen de renovación */
+.renewal-summary {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #4fc3f7;
+}
+
+.renewal-summary h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.renewal-summary .summary-grid {
+  margin-bottom: 16px;
+}
+
+/* Notificaciones */
+.fine-notice,
+.renewal-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 16px;
+}
+
+.fine-notice {
+  background: #fff3e0;
+  border: 1px solid #ffcc80;
+}
+
+.renewal-warning {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+}
+
+.notice-icon,
+.warning-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.notice-text,
+.warning-text {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Términos y condiciones */
+.terms-section {
+  margin-top: 16px;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.terms-checkbox input[type="checkbox"]:checked + .checkbox-custom {
+  background: #4fc3f7;
+  border-color: #4fc3f7;
+}
+
+.terms-checkbox input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.terms-text {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.terms-text a {
+  color: #4fc3f7;
+  text-decoration: none;
+}
+
+.terms-text a:hover {
+  text-decoration: underline;
+}
+
+/* Mensaje de error */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #ffebee;
+  border: 1px solid #ef9a9a;
+  border-radius: 6px;
+  color: #c00;
+  font-size: 13px;
+}
+
+.error-icon {
+  font-size: 16px;
+}
+
+/* Acciones del modal */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .loans-header,
+  .history-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .loans-controls,
+  .history-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .controls-left,
+  .controls-right {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  .sort-select,
+  .range-select {
+    width: 100%;
+  }
+  
+  .loans-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .footer-stats {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .footer-actions {
+    justify-content: flex-start;
+  }
+  
+  .modal-container {
+    margin: 20px;
+    max-height: 80vh;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .days-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .active-loans,
+  .loan-history {
+    padding: 16px;
+  }
+  
+  .loans-stats,
+  .history-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .btn-sm {
+    min-width: 28px;
+    padding: 3px 6px;
+  }
+}
