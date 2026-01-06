@@ -25,7 +25,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
            "ORDER BY COUNT(b.id) DESC")
     Page<Author> findAuthorsWithMostBooks(Pageable pageable);
     
-    // CAMBIA ESTE NOMBRE (o usa el otro en AuthorServiceImpl)
     @Query("SELECT DISTINCT a FROM Author a " +
            "JOIN a.books b " +
            "WHERE b IN (" +
@@ -33,7 +32,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
            "    GROUP BY l.book " +
            "    ORDER BY COUNT(l) DESC" +
            ")")
-    Page<Author> findPopularAuthors(Pageable pageable);  // CAMBIADO: findPopularAuthorsSimple -> findPopularAuthors
+    Page<Author> findPopularAuthors(Pageable pageable);  
     
     boolean existsByName(String name);
     
