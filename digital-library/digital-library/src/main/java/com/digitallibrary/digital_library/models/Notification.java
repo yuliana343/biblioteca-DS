@@ -1,6 +1,6 @@
 package com.digitallibrary.digital_library.models;
 
-import com.digitallibrary.digital_library.models.enums.NotificationType; // ← AÑADE ESTE IMPORT
+import com.digitallibrary.digital_library.models.enums.NotificationType; 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
