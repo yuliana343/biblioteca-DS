@@ -1,6 +1,6 @@
 package com.digitallibrary.digital_library.models;
 
-import com.digitallibrary.digital_library.models.enums.LoanStatus; // ← AÑADE ESTE IMPORT
+import com.digitallibrary.digital_library.models.enums.LoanStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
