@@ -12,25 +12,20 @@ import java.util.List;
 
 @Repository
 public interface LoanHistoryRepository extends JpaRepository<LoanHistory, Long> {
-    
-    // Buscar historial por usuario
+     
     List<LoanHistory> findByUserId(Long userId);
-    
-    // Buscar historial por libro
+     
     List<LoanHistory> findByBookId(Long bookId);
-    
-    // Calificación promedio por libro
+     
     @Query("SELECT AVG(lh.rating) FROM LoanHistory lh WHERE lh.book.id = :bookId AND lh.rating IS NOT NULL")
     Double findAverageRatingByBookId(@Param("bookId") Long bookId);
-    
-    // Historial por rango de fechas
+     
     @Query("SELECT lh FROM LoanHistory lh " +
            "WHERE lh.loanDate >= :startDate " +
            "AND lh.loanDate <= :endDate")
     List<LoanHistory> findByLoanDateBetween(@Param("startDate") LocalDate startDate,
                                            @Param("endDate") LocalDate endDate);
-    
-    // Libros más valorados
+     
     @Query("SELECT lh.book.id, AVG(lh.rating) as avgRating, COUNT(lh) as ratingCount " +
            "FROM LoanHistory lh " +
            "WHERE lh.rating IS NOT NULL " +
@@ -38,8 +33,7 @@ public interface LoanHistoryRepository extends JpaRepository<LoanHistory, Long> 
            "HAVING COUNT(lh) >= :minRatings " +
            "ORDER BY avgRating DESC")
     List<Object[]> findTopRatedBooks(@Param("minRatings") Integer minRatings);
-    
-    // Historial para recomendaciones
+     
     @Query("SELECT lh.user.id, lh.book.id, lh.rating FROM LoanHistory lh WHERE lh.rating IS NOT NULL")
     List<Object[]> findAllRatings();
 }
