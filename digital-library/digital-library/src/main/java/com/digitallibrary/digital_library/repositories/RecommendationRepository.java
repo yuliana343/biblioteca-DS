@@ -11,20 +11,15 @@ import java.util.List;
 
 @Repository
 public interface RecommendationRepository extends JpaRepository<Recommendation, Long> {
-    
-    // Buscar recomendaciones por usuario
+     
     List<Recommendation> findByUserId(Long userId);
-    
-    // Buscar recomendaciones por usuario ordenadas por score
+     
     List<Recommendation> findByUserIdOrderByScoreDesc(Long userId);
-    
-    // Verificar si existe recomendación para usuario y libro
+     
     boolean existsByUserIdAndBookId(Long userId, Long bookId);
-    
-    // Eliminar recomendaciones antiguas por usuario
+     
     void deleteByUserId(Long userId);
-    
-    // Recomendaciones recientes
+     
     @Query("SELECT r FROM Recommendation r " +
            "WHERE r.user.id = :userId " +
            "AND r.createdAt >= :sinceDate " +
