@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
-  // Login
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
