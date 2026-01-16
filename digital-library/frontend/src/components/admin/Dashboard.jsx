@@ -15,8 +15,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     setLoading(true);
-    try {
-      // Simulación de datos
+    try { 
       const mockStats = {
         totalBooks: 1234,
         totalUsers: 567,
@@ -50,7 +49,7 @@ const Dashboard = () => {
   };
 
   const getMetricTrend = (metric) => {
-    // Simulación de tendencias
+     
     const trends = {
       totalBooks: { value: '+12%', positive: true },
       totalUsers: { value: '+8%', positive: true },
