@@ -27,8 +27,7 @@ public class LoanHistory {
     
     @Column(name = "rating")
     private Integer rating; // 1-5
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
