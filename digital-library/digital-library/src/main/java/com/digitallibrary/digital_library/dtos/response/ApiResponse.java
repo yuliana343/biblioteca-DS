@@ -35,8 +35,7 @@ public class ApiResponse {
         this.data = data;
         this.statusCode = statusCode;
     }
-
-    // Getters y Setters
+ 
     public boolean isSuccess() {
         return success;
     }
@@ -76,8 +75,7 @@ public class ApiResponse {
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
     }
-
-    // Métodos estáticos para respuestas comunes
+ 
     public static ApiResponse success(String message) {
         return new ApiResponse(true, message);
     }
