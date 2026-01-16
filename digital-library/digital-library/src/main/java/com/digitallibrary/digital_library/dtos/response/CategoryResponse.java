@@ -12,8 +12,7 @@ public class CategoryResponse {
     
     private Integer bookCount;
     private Integer loanCount;
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
