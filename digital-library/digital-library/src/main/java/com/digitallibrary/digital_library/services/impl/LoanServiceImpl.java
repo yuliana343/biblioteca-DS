@@ -53,34 +53,28 @@ public class LoanServiceImpl implements LoanService {
 
         Book book = bookRepository.findById(loanRequest.getBookId())
             .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
-
-        // Verificar si el usuario está activo
+ 
         if (!user.getIsActive()) {
             throw new RuntimeException("El usuario no está activo");
         }
-
-        // Verificar si el libro está disponible
+ 
         if (book.getAvailableCopies() <= 0) {
             throw new RuntimeException("El libro no está disponible");
         }
-
-        // Verificar si el usuario tiene préstamos vencidos
+ 
         if (hasOverdueLoans(user.getId())) {
             throw new RuntimeException("El usuario tiene préstamos vencidos");
         }
-
-        // Verificar límite de préstamos (ejemplo: máximo 5)
+ 
         if (getUserLoanCount(user.getId()) >= 5) {
             throw new RuntimeException("El usuario ha alcanzado el límite de préstamos");
         }
-
-        // Verificar si ya tiene un préstamo activo de este libro
+ 
         if (loanRepository.existsByUserIdAndBookIdAndStatus(
                 user.getId(), book.getId(), LoanStatus.ACTIVE)) {
             throw new RuntimeException("El usuario ya tiene un préstamo activo de este libro");
         }
-
-        // Crear préstamo
+ 
         Loan loan = new Loan();
         loan.setUser(user);
         loan.setBook(book);
@@ -90,22 +84,19 @@ public class LoanServiceImpl implements LoanService {
             loanRequest.getDueDate() : LocalDate.now().plusDays(LOAN_DURATION_DAYS));
         loan.setStatus(LoanStatus.ACTIVE);
         loan.setNotes(loanRequest.getNotes());
-
-        // Actualizar copias disponibles
+ 
         book.setAvailableCopies(book.getAvailableCopies() - 1);
         bookRepository.save(book);
 
         loan = loanRepository.save(loan);
-
-        // Enviar confirmación por email
+ 
         try {
             emailService.sendLoanConfirmation(
                 user.getEmail(), 
                 book.getTitle(), 
                 loan.getDueDate()
             );
-        } catch (Exception e) {
-            // Log error but don't fail loan creation
+        } catch (Exception e) { 
             System.err.println("Error sending loan confirmation: " + e.getMessage());
         }
 
@@ -175,20 +166,17 @@ public class LoanServiceImpl implements LoanService {
         if (loan.getStatus() != LoanStatus.ACTIVE && loan.getStatus() != LoanStatus.OVERDUE) {
             throw new RuntimeException("El préstamo ya ha sido devuelto");
         }
-
-        // Marcar como devuelto
+ 
         loan.setStatus(LoanStatus.RETURNED);
         loan.setReturnDate(LocalDate.now());
-
-        // Actualizar copias disponibles del libro
+ 
         Book book = loan.getBook();
         book.setAvailableCopies(book.getAvailableCopies() + 1);
         bookRepository.save(book);
-
-        // Calcular multa si hay retraso
+ 
         if (loan.getDueDate().isBefore(LocalDate.now())) {
             long daysOverdue = ChronoUnit.DAYS.between(loan.getDueDate(), LocalDate.now());
-            double fine = daysOverdue * 1.0; // $1 por día de retraso
+            double fine = daysOverdue * 1.0;  
             loan.setFineAmount(fine);
         }
 
@@ -213,8 +201,7 @@ public class LoanServiceImpl implements LoanService {
         if (!canRenewLoan(loan.getId())) {
             throw new RuntimeException("No se puede renovar el préstamo");
         }
-
-        // Renovar préstamo
+ 
         loan.setDueDate(loan.getDueDate().plusDays(LOAN_DURATION_DAYS));
         loan.setRenewalsCount(loan.getRenewalsCount() + 1);
         loan = loanRepository.save(loan);
@@ -231,8 +218,7 @@ public class LoanServiceImpl implements LoanService {
         try {
             LoanStatus newStatus = LoanStatus.valueOf(status.toUpperCase());
             loan.setStatus(newStatus);
-            
-            // Si se marca como perdido, ajustar copias
+             
             if (newStatus == LoanStatus.LOST) {
                 Book book = loan.getBook();
                 book.setTotalCopies(book.getTotalCopies() - 1);
@@ -254,8 +240,7 @@ public class LoanServiceImpl implements LoanService {
     public ApiResponse deleteLoan(Long id) {
         Loan loan = loanRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Préstamo no encontrado"));
-
-        // Solo se pueden eliminar préstamos devueltos o cancelados
+ 
         if (loan.getStatus() == LoanStatus.ACTIVE || loan.getStatus() == LoanStatus.OVERDUE) {
             throw new RuntimeException("No se puede eliminar un préstamo activo o vencido");
         }
@@ -284,8 +269,7 @@ public class LoanServiceImpl implements LoanService {
         stats.put("activeLoans", loanRepository.countByStatus(LoanStatus.ACTIVE));
         stats.put("overdueLoans", loanRepository.countByStatus(LoanStatus.OVERDUE));
         stats.put("returnedLoans", loanRepository.countByStatus(LoanStatus.RETURNED));
-        
-        // Préstamos del mes actual
+         
         LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
         LocalDate lastDayOfMonth = LocalDate.now().withDayOfMonth(
             LocalDate.now().lengthOfMonth());
@@ -299,11 +283,9 @@ public class LoanServiceImpl implements LoanService {
     public boolean canRenewLoan(Long loanId) {
         Loan loan = loanRepository.findById(loanId)
             .orElseThrow(() -> new RuntimeException("Préstamo no encontrado"));
-
-        // Verificar si hay reservas para este libro
+ 
         boolean hasReservations = !loan.getBook().getReservations().isEmpty();
-        
-        // Verificar si el usuario tiene multas pendientes
+         
         boolean hasFines = loan.getFineAmount() > 0;
 
         return loan.getRenewalsCount() < MAX_RENEWALS && 
@@ -339,8 +321,7 @@ public class LoanServiceImpl implements LoanService {
         response.setFineAmount(loan.getFineAmount());
         response.setNotes(loan.getNotes());
         response.setCreatedAt(loan.getCreatedAt());
-
-        // Calcular propiedades adicionales
+ 
         response.setCanRenew(canRenewLoan(loan.getId()));
         response.setIsOverdue(loan.getStatus() == LoanStatus.OVERDUE || 
             (loan.getStatus() == LoanStatus.ACTIVE && loan.getDueDate().isBefore(LocalDate.now())));
