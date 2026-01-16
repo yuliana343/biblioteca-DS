@@ -17,8 +17,7 @@ public class ReservationNotAllowedException extends RuntimeException {
     public ReservationNotAllowedException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    // Métodos factory estáticos para diferentes casos de reserva
+     
     public static ReservationNotAllowedException bookNotAvailable(Long bookId) {
         String message = String.format("El libro con ID %d no está disponible para reserva", bookId);
         return new ReservationNotAllowedException(message);
