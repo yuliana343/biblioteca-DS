@@ -65,8 +65,7 @@ public class User implements UserDetails {
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Notification> notifications = new HashSet<>();
-    
-    // Métodos de UserDetails
+     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
@@ -112,8 +111,7 @@ public class User implements UserDetails {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
-    // Getters y Setters (mantén los que ya tienes)
+ 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     
