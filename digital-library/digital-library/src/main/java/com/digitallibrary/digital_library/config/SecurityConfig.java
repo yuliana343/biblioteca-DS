@@ -70,7 +70,7 @@ public class SecurityConfig {
         return provider;
     }
 
-    // 🔑 Authentication Manager
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config) throws Exception {
