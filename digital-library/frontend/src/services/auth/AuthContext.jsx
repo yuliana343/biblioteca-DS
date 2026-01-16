@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Verificar si hay usuario al cargar la app
   useEffect(() => {
     const initAuth = async () => {
       try {
