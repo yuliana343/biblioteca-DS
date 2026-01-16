@@ -1,6 +1,6 @@
 package com.digitallibrary.digital_library.services.impl;
  
-import java.time.LocalDate; // Asegúrate de tener este import
+import java.time.LocalDate;  
 import com.digitallibrary.digital_library.services.EmailService;
 import org.springframework.stereotype.Service;
  
@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl implements EmailService {
 
     @Override
-    public void sendWelcomeEmail(String to, String username) {
-        // Implementación real usaría JavaMailSender o servicio externo
+    public void sendWelcomeEmail(String to, String username) { 
         System.out.println("Enviando email de bienvenida a: " + to);
         System.out.println("Bienvenido " + username + " a la Biblioteca Digital");
     }
