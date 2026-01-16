@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService {
         if (role != null && !role.isEmpty()) {
             try {
                 userRole = UserRole.valueOf(role.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                // Si el rol no es válido, se ignora
+            } catch (IllegalArgumentException e) { 
             }
         }
 
@@ -71,8 +70,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse updateUser(Long id, UserResponse userUpdate) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Solo admin puede cambiar el rol
+ 
         if (userUpdate.getRole() != null) {
             User currentUser = getCurrentUserEntity();
             if (currentUser.getRole() != UserRole.ADMIN) {
@@ -88,8 +86,7 @@ public class UserServiceImpl implements UserService {
     public ApiResponse deleteUser(Long id) {
         User user = userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // Verificar si el usuario tiene préstamos activos
+ 
         if (user.getLoans().stream().anyMatch(loan -> 
             loan.getStatus().name().equals("ACTIVE"))) {
             throw new RuntimeException("No se puede eliminar el usuario porque tiene préstamos activos");
@@ -137,7 +134,7 @@ public class UserServiceImpl implements UserService {
 @Override
 @Transactional
 public ApiResponse changePassword(Long userId, String oldPassword, String newPassword) {
-    // Verificar que el usuario existe
+     
     if (!userRepository.existsById(userId)) {
         return ApiResponse.error("Usuario no encontrado");
     }
@@ -209,8 +206,7 @@ public ApiResponse changePassword(Long userId, String oldPassword, String newPas
         response.setIsActive(user.getIsActive());
         response.setCreatedAt(user.getCreatedAt());
         response.setUpdatedAt(user.getUpdatedAt());
-
-        // Calcular estadísticas
+ 
         if (user.getLoans() != null) {
             response.setTotalLoans(user.getLoans().size());
             response.setActiveLoans((int) user.getLoans().stream()
