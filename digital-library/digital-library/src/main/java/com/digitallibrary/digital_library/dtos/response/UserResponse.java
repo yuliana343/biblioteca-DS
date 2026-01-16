@@ -21,8 +21,7 @@ public class UserResponse {
     private Integer totalLoans;
     private Integer activeLoans;
     private Integer overdueLoans;
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
