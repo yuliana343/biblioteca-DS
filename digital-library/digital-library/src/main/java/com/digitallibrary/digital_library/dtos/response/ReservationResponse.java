@@ -16,8 +16,7 @@ public class ReservationResponse {
     private Integer priority;
     private LocalDateTime notifiedAt;
     private LocalDateTime createdAt;
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
