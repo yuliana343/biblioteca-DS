@@ -39,8 +39,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookResponse createBook(BookRequest bookRequest) {
-        // Verificar si el ISBN ya existe
+    public BookResponse createBook(BookRequest bookRequest) { 
         if (bookRepository.existsByIsbn(bookRequest.getIsbn())) {
             throw new RuntimeException("El ISBN ya está registrado");
         }
@@ -59,12 +58,10 @@ public class BookServiceImpl implements BookService {
         book.setAvailableCopies(bookRequest.getAvailableCopies() != null ? 
             bookRequest.getAvailableCopies() : bookRequest.getTotalCopies());
         book.setLocation(bookRequest.getLocation());
-
-        // Asignar autores
+ 
         List<Author> authors = authorRepository.findAllById(bookRequest.getAuthorIds());
         book.setAuthors(authors.stream().collect(Collectors.toSet()));
-
-        // Asignar categorías
+ 
         List<Category> categories = categoryRepository.findAllById(bookRequest.getCategoryIds());
         book.setCategories(categories.stream().collect(Collectors.toSet()));
 
@@ -77,8 +74,7 @@ public class BookServiceImpl implements BookService {
     public BookResponse updateBook(Long id, BookRequest bookRequest) {
         Book book = bookRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
-
-        // Verificar si el ISBN cambió y si ya existe
+ 
         if (!book.getIsbn().equals(bookRequest.getIsbn()) && 
             bookRepository.existsByIsbn(bookRequest.getIsbn())) {
             throw new RuntimeException("El ISBN ya está registrado");
@@ -95,13 +91,11 @@ public class BookServiceImpl implements BookService {
         book.setCoverImageUrl(bookRequest.getCoverImageUrl());
         book.setTotalCopies(bookRequest.getTotalCopies());
         book.setLocation(bookRequest.getLocation());
-
-        // Actualizar autores
+ 
         List<Author> authors = authorRepository.findAllById(bookRequest.getAuthorIds());
         book.getAuthors().clear();
         book.getAuthors().addAll(authors);
-
-        // Actualizar categorías
+ 
         List<Category> categories = categoryRepository.findAllById(bookRequest.getCategoryIds());
         book.getCategories().clear();
         book.getCategories().addAll(categories);
@@ -115,8 +109,7 @@ public class BookServiceImpl implements BookService {
     public ApiResponse deleteBook(Long id) {
         Book book = bookRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
-
-        // Verificar si hay préstamos activos
+ 
         if (book.getAvailableCopies() < book.getTotalCopies()) {
             throw new RuntimeException("No se puede eliminar el libro porque tiene préstamos activos");
         }
@@ -237,8 +230,7 @@ public class BookServiceImpl implements BookService {
         response.setLocation(book.getLocation());
         response.setCreatedAt(book.getCreatedAt());
         response.setUpdatedAt(book.getUpdatedAt());
-
-        // Convertir autores
+ 
         if (book.getAuthors() != null) {
             List<AuthorResponse> authors = book.getAuthors().stream()
                 .map(author -> {
@@ -253,8 +245,7 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
             response.setAuthors(authors);
         }
-
-        // Convertir categorías
+ 
         if (book.getCategories() != null) {
             List<CategoryResponse> categories = book.getCategories().stream()
                 .map(category -> {
