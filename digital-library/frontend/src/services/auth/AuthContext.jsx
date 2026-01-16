@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login con demo
   const demoLogin = async (role = 'USER') => {
     setLoading(true);
     setError(null);
