@@ -53,11 +53,10 @@ public class Loan {
             loanDate = LocalDate.now();
         }
         if (dueDate == null) {
-            dueDate = loanDate.plusDays(14); // 2 semanas por defecto
+            dueDate = loanDate.plusDays(14);  
         }
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
