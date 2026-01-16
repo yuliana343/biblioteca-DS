@@ -36,8 +36,7 @@ public class Notification {
     protected void onCreate() {
         sentAt = LocalDateTime.now();
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
