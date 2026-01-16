@@ -49,33 +49,28 @@ public class ReservationServiceImpl implements ReservationService {
         
         Book book = bookRepository.findById(reservationRequest.getBookId())
             .orElseThrow(() -> new ResourceNotFoundException("Libro", reservationRequest.getBookId()));
-        
-        // Verificar si el usuario está activo
+         
         if (!user.getIsActive()) {
             throw new RuntimeException("El usuario no está activo");
         }
-        
-        // Verificar si ya existe una reserva activa para este usuario y libro
+         
         if (reservationRepository.existsByUserIdAndBookIdAndStatus(
                 user.getId(), book.getId(), ReservationStatus.PENDING)) {
             throw new RuntimeException("Ya tiene una reserva pendiente para este libro");
         }
-        
-        // Verificar si el usuario ya tiene el libro prestado
+         
         if (user.getLoans().stream().anyMatch(loan -> 
             loan.getBook().getId().equals(book.getId()) && 
             (loan.getStatus().name().equals("ACTIVE") || loan.getStatus().name().equals("OVERDUE")))) {
             throw new RuntimeException("Ya tiene un préstamo activo de este libro");
         }
-        
-        // Crear la reserva
+         
         Reservation reservation = new Reservation();
         reservation.setUser(user);
         reservation.setBook(book);
         reservation.setStatus(ReservationStatus.PENDING);
-        reservation.setExpiryDate(LocalDateTime.now().plusHours(48)); // 48 horas
-        
-        // Calcular prioridad basada en la fecha de reserva
+        reservation.setExpiryDate(LocalDateTime.now().plusHours(48)); 
+         
         List<Reservation> pendingReservations = reservationRepository
             .findPendingReservationsByBookId(book.getId());
         reservation.setPriority(pendingReservations.size() + 1);
@@ -120,8 +115,7 @@ public class ReservationServiceImpl implements ReservationService {
         
         reservation.setStatus(ReservationStatus.CANCELLED);
         reservationRepository.save(reservation);
-        
-        // Recalcular prioridades para las reservas restantes
+         
         recalculatePriorities(reservation.getBook().getId());
         
         return ApiResponse.success("Reserva cancelada exitosamente");
@@ -136,8 +130,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservation.getStatus() != ReservationStatus.PENDING) {
             throw new RuntimeException("Solo se pueden confirmar reservas pendientes");
         }
-        
-        // Verificar que el libro esté disponible
+         
         if (reservation.getBook().getAvailableCopies() <= 0) {
             throw new BookNotAvailableException(reservation.getBook().getId());
         }
@@ -145,8 +138,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setStatus(ReservationStatus.ACTIVE);
         reservation.setNotifiedAt(LocalDateTime.now());
         reservationRepository.save(reservation);
-        
-        // Notificar al usuario
+         
         try {
             emailService.sendReservationAvailable(
                 reservation.getUser().getEmail(),
@@ -160,7 +152,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    @Scheduled(fixedRate = 3600000) // Cada hora
+    @Scheduled(fixedRate = 3600000)  
     @Transactional
     public void processExpiredReservations() {
         List<Reservation> expiredReservations = reservationRepository.findExpiredReservations();
@@ -171,7 +163,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
         
         if (!expiredReservations.isEmpty()) {
-            // Recalcular prioridades para los libros afectados
+         
             expiredReservations.stream()
                 .map(reservation -> reservation.getBook().getId())
                 .distinct()
@@ -180,7 +172,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    @Scheduled(fixedRate = 1800000) // Cada 30 minutos
+    @Scheduled(fixedRate = 1800000)  
     @Transactional
     public void notifyAvailableReservations() {
         List<Reservation> reservationsToNotify = reservationRepository.findReservationsToNotify();
