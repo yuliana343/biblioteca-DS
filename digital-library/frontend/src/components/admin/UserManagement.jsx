@@ -30,7 +30,7 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      // Simulación de datos
+      
       const mockUsers = Array.from({ length: 50 }, (_, i) => ({
         id: i + 1,
         username: `user${i + 1}`,
@@ -61,18 +61,15 @@ const UserManagement = () => {
 
   const applyFiltersAndSort = () => {
     let result = [...users];
-
-    // Aplicar filtro por rol
+ 
     if (filterRole !== 'all') {
       result = result.filter(user => user.role === filterRole);
     }
-
-    // Aplicar filtro por estado
+ 
     if (filterStatus !== 'all') {
       result = result.filter(user => user.status === filterStatus);
     }
-
-    // Aplicar búsqueda
+ 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(user => 
@@ -83,8 +80,7 @@ const UserManagement = () => {
         user.dni.toLowerCase().includes(term)
       );
     }
-
-    // Aplicar ordenación
+ 
     result.sort((a, b) => {
       switch (sortBy) {
         case 'name':
@@ -105,7 +101,7 @@ const UserManagement = () => {
     });
 
     setFilteredUsers(result);
-    setCurrentPage(1); // Resetear a primera página
+    setCurrentPage(1);  
   };
 
   const handleSelectUser = (userId) => {
@@ -136,27 +132,27 @@ const UserManagement = () => {
     switch (action) {
       case 'activate':
         if (window.confirm(`¿Activar ${selectedUsers.length} usuario(s)?`)) {
-          // Lógica de activación
+          
           console.log('Activating users:', selectedUsers);
           setSelectedUsers([]);
         }
         break;
       case 'deactivate':
         if (window.confirm(`¿Desactivar ${selectedUsers.length} usuario(s)?`)) {
-          // Lógica de desactivación
+          
           console.log('Deactivating users:', selectedUsers);
           setSelectedUsers([]);
         }
         break;
       case 'delete':
         if (window.confirm(`¿Eliminar ${selectedUsers.length} usuario(s)? Esta acción no se puede deshacer.`)) {
-          // Lógica de eliminación
+           
           console.log('Deleting users:', selectedUsers);
           setSelectedUsers([]);
         }
         break;
       case 'export':
-        // Lógica de exportación
+        
         console.log('Exporting users:', selectedUsers);
         break;
     }
@@ -175,7 +171,7 @@ const UserManagement = () => {
   const confirmDelete = () => {
     if (userToDelete) {
       console.log('Deleting user:', userToDelete.id);
-      // Lógica de eliminación
+       
       setShowDeleteConfirm(false);
       setUserToDelete(null);
     }
