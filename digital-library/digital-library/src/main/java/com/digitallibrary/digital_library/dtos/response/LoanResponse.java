@@ -24,8 +24,7 @@ public class LoanResponse {
     private Boolean canRenew;
     private Boolean isOverdue;
     private Integer daysOverdue;
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }
