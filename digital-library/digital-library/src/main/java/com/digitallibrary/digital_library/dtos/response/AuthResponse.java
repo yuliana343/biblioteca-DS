@@ -11,8 +11,7 @@ public class AuthResponse {
     private String role;
     private String firstName;
     private String lastName;
-
-    // Getters y Setters
+ 
     public String getToken() {
         return token;
     }
