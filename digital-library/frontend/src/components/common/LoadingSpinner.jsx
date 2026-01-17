@@ -8,7 +8,7 @@ const LoadingSpinner = ({
   message = 'Cargando...',
   fullScreen = false,
   overlay = false,
-  type = 'spinner' // 'spinner', 'dots', 'pulse', 'skeleton'
+  type = 'spinner' 
 }) => {
   const sizeClasses = {
     small: 'spinner-sm',
@@ -99,7 +99,6 @@ const LoadingSpinner = ({
   );
 };
 
-// Componente para skeletons específicos
 export const BookSkeleton = () => (
   <div className="book-skeleton">
     <div className="skeleton-cover"></div>
