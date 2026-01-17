@@ -34,7 +34,7 @@ const BookForm = ({
   const [authorSearch, setAuthorSearch] = useState('');
   const [categorySearch, setCategorySearch] = useState('');
 
-  // Cargar datos iniciales si estamos editando
+  
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -58,13 +58,11 @@ const BookForm = ({
     }
   }, [initialData]);
 
-  // Simular carga de autores y categorías
   useEffect(() => {
     fetchAuthorsAndCategories();
   }, []);
 
   const fetchAuthorsAndCategories = async () => {
-    // Simulación de datos
     const mockAuthors = [
       { id: 1, name: 'Gabriel García Márquez' },
       { id: 2, name: 'Isabel Allende' },
@@ -129,8 +127,6 @@ const BookForm = ({
       ...prev,
       [name]: type === 'number' ? parseInt(value) || 0 : value
     }));
-
-    // Limpiar error del campo
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
