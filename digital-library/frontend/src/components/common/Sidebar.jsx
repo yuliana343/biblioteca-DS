@@ -1,4 +1,4 @@
-// src/components/common/Sidebar.jsx
+
 import React, { useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../services/auth/AuthContext';
@@ -11,13 +11,11 @@ const Sidebar = ({ isOpen, onClose }) => {
   const isAdmin = user?.role === 'ADMIN';
   const isLibrarian = user?.role === 'LIBRARIAN';
 
-  // Menú base para todos los usuarios
   const baseMenuItems = [
     { path: '/', icon: '🏠', label: 'Inicio', exact: true },
     { path: '/catalog', icon: '📚', label: 'Catálogo' },
   ];
 
-  // Menú para usuarios autenticados
   const userMenuItems = user ? [
     { path: '/loans', icon: '🔄', label: 'Mis Préstamos' },
     { path: '/reservations', icon: '📅', label: 'Mis Reservas' },
@@ -26,7 +24,6 @@ const Sidebar = ({ isOpen, onClose }) => {
     { path: '/profile', icon: '👤', label: 'Mi Perfil' },
   ] : [];
 
-  // Menú para bibliotecarios
   const librarianMenuItems = isLibrarian ? [
     { path: '/librarian/loans', icon: '🔄', label: 'Préstamos' },
     { path: '/librarian/reservations', icon: '📅', label: 'Reservas' },
@@ -35,7 +32,6 @@ const Sidebar = ({ isOpen, onClose }) => {
     { path: '/dashboard', icon: '📊', label: 'Panel' },
   ] : [];
 
-  // Menú para administradores
   const adminMenuItems = isAdmin ? [
     { path: '/admin/dashboard', icon: '📈', label: 'Dashboard' },
     { path: '/admin/books', icon: '📖', label: 'Libros' },
@@ -48,7 +44,6 @@ const Sidebar = ({ isOpen, onClose }) => {
     { path: '/admin/statistics', icon: '📊', label: 'Estadísticas' },
   ] : [];
 
-  // Combinar menús según rol
   const menuItems = [
     ...baseMenuItems,
     ...userMenuItems,
@@ -56,7 +51,6 @@ const Sidebar = ({ isOpen, onClose }) => {
     ...adminMenuItems
   ];
 
-  // Cerrar sidebar al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && 
@@ -76,7 +70,6 @@ const Sidebar = ({ isOpen, onClose }) => {
     };
   }, [isOpen, onClose]);
 
-  // Prevenir scroll del body cuando sidebar está abierto
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
