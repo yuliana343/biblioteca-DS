@@ -28,7 +28,6 @@ const BookDetails = () => {
   const fetchBookDetails = async () => {
     try {
       setLoading(true);
-      // Simulación de datos - en producción sería una llamada API
       const mockBook = {
         id: parseInt(id),
         title: 'Cien años de soledad',
@@ -72,7 +71,6 @@ const BookDetails = () => {
   };
 
   const fetchRelatedBooks = async () => {
-    // Simulación de libros relacionados
     const mockRelated = [
       {
         id: 2,
@@ -100,7 +98,6 @@ const BookDetails = () => {
   };
 
   const fetchReviews = async () => {
-    // Simulación de reseñas
     const mockReviews = [
       {
         id: 1,
@@ -129,7 +126,6 @@ const BookDetails = () => {
 
     setIsReserving(true);
     try {
-      // Lógica de reserva
       await new Promise(resolve => setTimeout(resolve, 1000));
       alert('Libro reservado exitosamente. Te notificaremos cuando esté disponible.');
     } catch (err) {
@@ -148,7 +144,6 @@ const BookDetails = () => {
 
     setIsLoaning(true);
     try {
-      // Lógica de préstamo
       await new Promise(resolve => setTimeout(resolve, 1000));
       alert('Préstamo solicitado exitosamente. Puedes recoger el libro en la biblioteca.');
     } catch (err) {
