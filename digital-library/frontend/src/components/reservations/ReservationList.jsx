@@ -17,7 +17,7 @@ const ReservationList = ({
 }) => {
   const { user } = useContext(AuthContext);
   const [filteredReservations, setFilteredReservations] = useState(reservations);
-  const [filter, setFilter] = useState('all'); // all, pending, active, cancelled, expired
+  const [filter, setFilter] = useState('all');  
   const [sortBy, setSortBy] = useState('expiryDate');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,15 +66,13 @@ const ReservationList = ({
 
   const applyFiltersAndSort = () => {
     let result = [...reservations];
-
-    // Aplicar filtro
+ 
     if (filter !== 'all') {
       result = result.filter(reservation => 
         reservation.status === filter.toUpperCase()
       );
     }
-
-    // Aplicar búsqueda
+ 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(reservation => 
@@ -85,8 +83,7 @@ const ReservationList = ({
         reservation.user?.email?.toLowerCase().includes(term)
       );
     }
-
-    // Aplicar ordenación
+ 
     result.sort((a, b) => {
       switch (sortBy) {
         case 'expiryDate':
@@ -107,7 +104,7 @@ const ReservationList = ({
     });
 
     setFilteredReservations(result);
-    setCurrentPage(1); // Resetear a primera página al filtrar
+    setCurrentPage(1);   
   };
 
   const handleSelectReservation = (reservationId) => {
@@ -119,7 +116,7 @@ const ReservationList = ({
       }
     });
   };
-
+  
   const handleSelectAll = () => {
     if (selectedReservations.length === filteredReservations.length) {
       setSelectedReservations([]);
@@ -231,8 +228,7 @@ const ReservationList = ({
            !reservation.notifiedAt &&
            (isAdminView || user?.role === 'LIBRARIAN');
   };
-
-  // Paginación
+ 
   const totalPages = Math.ceil(filteredReservations.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedReservations = filteredReservations.slice(startIndex, startIndex + pageSize);
