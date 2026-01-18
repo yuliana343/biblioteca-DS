@@ -47,8 +47,7 @@ const ActiveLoans = ({
 
   const applyFiltersAndSort = () => {
     let result = [...loans];
-
-    // Aplicar filtro
+ 
     if (filter === 'active') {
       result = result.filter(loan => loan.status === 'ACTIVE');
     } else if (filter === 'overdue') {
@@ -56,8 +55,7 @@ const ActiveLoans = ({
     } else if (filter === 'returned') {
       result = result.filter(loan => loan.status === 'RETURNED');
     }
-
-    // Aplicar búsqueda
+ 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(loan => 
@@ -67,8 +65,7 @@ const ActiveLoans = ({
         loan.user?.lastName?.toLowerCase().includes(term)
       );
     }
-
-    // Aplicar ordenación
+ 
     result.sort((a, b) => {
       switch (sortBy) {
         case 'dueDate':
@@ -154,8 +151,7 @@ const ActiveLoans = ({
     const today = new Date();
     const dueDate = new Date(loan.dueDate);
     const daysOverdue = Math.max(0, Math.floor((today - dueDate) / (1000 * 60 * 60 * 24)));
-    
-    // Calcular multa: $1 por día de retraso
+     
     return daysOverdue * 1;
   };
 
