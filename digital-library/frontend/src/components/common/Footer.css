@@ -1,4 +1,4 @@
-/* src/components/common/Footer.css */
+
 .footer {
   background: var(--color-bg-primary);
   border-top: 1px solid var(--color-border-light);
@@ -13,8 +13,7 @@
   margin: 0 auto;
   padding: 48px 24px;
 }
-
-/* Secciones del footer */
+ 
 .footer-section {
   display: flex;
   flex-direction: column;
@@ -53,8 +52,7 @@
   color: var(--color-text-primary);
   margin: 0 0 12px 0;
 }
-
-/* Enlaces */
+ 
 .footer-links {
   list-style: none;
   margin: 0;
@@ -80,8 +78,7 @@
 .footer-link:hover {
   color: var(--color-primary);
 }
-
-/* Contacto */
+ 
 .footer-contact {
   list-style: none;
   margin: 0;
@@ -105,8 +102,7 @@
   flex-shrink: 0;
   margin-top: 2px;
 }
-
-/* Redes sociales */
+ 
 .social-links {
   display: flex;
   gap: 12px;
@@ -132,8 +128,7 @@
   color: white;
   transform: translateY(-2px);
 }
-
-/* Pie inferior */
+ 
 .footer-bottom {
   border-top: 1px solid var(--color-border-light);
   padding: 24px;
@@ -152,8 +147,7 @@
   opacity: 0.7;
   margin: 0;
 }
-
-/* Responsive */
+ 
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
