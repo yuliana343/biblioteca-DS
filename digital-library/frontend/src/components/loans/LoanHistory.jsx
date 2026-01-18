@@ -10,14 +10,14 @@ const LoanHistory = ({
   error = null,
   onViewDetails,
   onAddReview,
-  userId = null // Para vista de administrador
+  userId = null  
 }) => {
   const { user } = useContext(AuthContext);
   const [filteredLoans, setFilteredLoans] = useState(loans);
-  const [filter, setFilter] = useState('all'); // all, returned, overdue, lost
+  const [filter, setFilter] = useState('all'); 
   const [sortBy, setSortBy] = useState('returnDate');
   const [searchTerm, setSearchTerm] = useState('');
-  const [timeRange, setTimeRange] = useState('all'); // all, month, year, custom
+  const [timeRange, setTimeRange] = useState('all');  
   const [customStartDate, setCustomStartDate] = useState('');
   const [customEndDate, setCustomEndDate] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,8 +40,7 @@ const LoanHistory = ({
     const returned = loans.filter(loan => loan.status === 'RETURNED').length;
     const overdue = loans.filter(loan => loan.status === 'OVERDUE').length;
     const lost = loans.filter(loan => loan.status === 'LOST').length;
-    
-    // Calcular días promedio de préstamo
+     
     const returnedLoans = loans.filter(loan => loan.status === 'RETURNED' && loan.loanDate && loan.returnDate);
     const totalDays = returnedLoans.reduce((sum, loan) => {
       const loanDate = new Date(loan.loanDate);
@@ -64,13 +63,11 @@ const LoanHistory = ({
 
   const applyFiltersAndSort = () => {
     let result = [...loans];
-
-    // Aplicar filtro por estado
+ 
     if (filter !== 'all') {
       result = result.filter(loan => loan.status === filter.toUpperCase());
     }
-
-    // Aplicar filtro por rango de tiempo
+ 
     if (timeRange !== 'all') {
       const now = new Date();
       let startDate = new Date();
@@ -100,8 +97,7 @@ const LoanHistory = ({
         });
       }
     }
-
-    // Aplicar búsqueda
+ 
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       result = result.filter(loan => 
@@ -117,8 +113,7 @@ const LoanHistory = ({
         ))
       );
     }
-
-    // Aplicar ordenación
+ 
     result.sort((a, b) => {
       switch (sortBy) {
         case 'returnDate':
@@ -191,8 +186,7 @@ const LoanHistory = ({
   const calculateFinePaid = (loan) => {
     return loan.fineAmount || 0;
   };
-
-  // Paginación
+ 
   const totalPages = Math.ceil(filteredLoans.length / pageSize);
   const startIndex = (currentPage - 1) * pageSize;
   const paginatedLoans = filteredLoans.slice(startIndex, startIndex + pageSize);
