@@ -33,8 +33,7 @@ const CreateReservation = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState('');
-  
-  // Validar si el usuario puede hacer más reservas
+   
   const activeReservations = userReservations.filter(r => 
     r.status === 'PENDING' || r.status === 'ACTIVE'
   ).length;
@@ -119,8 +118,7 @@ const CreateReservation = ({
     if (!formData.userId) {
       newErrors.userId = 'Usuario no identificado';
     }
-
-    // Validar límite de reservas
+ 
     if (!canMakeReservation) {
       newErrors.limit = `Has alcanzado el límite de ${maxReservations} reservas activas`;
     }
@@ -142,8 +140,7 @@ const CreateReservation = ({
     try {
       await onCreateReservation(formData);
       setSuccess('Reserva creada exitosamente');
-      
-      // Redirigir después de 2 segundos
+       
       setTimeout(() => {
         navigate('/reservations');
       }, 2000);
@@ -167,7 +164,7 @@ const CreateReservation = ({
       return 'Disponible inmediatamente';
     }
     
-    const avgLoanDays = 14; // Días promedio de préstamo
+    const avgLoanDays = 14; 
     const pendingLoans = availability.pendingLoans || 0;
     const estimatedDays = pendingLoans * avgLoanDays;
     
@@ -182,7 +179,7 @@ const CreateReservation = ({
 
   const getExpiryDate = () => {
     const now = new Date();
-    now.setHours(now.getHours() + 48); // 48 horas por defecto
+    now.setHours(now.getHours() + 48);  
     return now;
   };
 
