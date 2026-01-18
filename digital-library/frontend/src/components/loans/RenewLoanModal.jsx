@@ -8,8 +8,7 @@ const RenewLoanModal = ({ loan, onClose, onConfirm }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (loan) {
-      // Calcular nueva fecha de vencimiento (actual + renewalDays)
+    if (loan) { 
       const currentDueDate = new Date(loan.dueDate);
       const newDate = new Date(currentDueDate);
       newDate.setDate(newDate.getDate() + renewalDays);
@@ -24,7 +23,7 @@ const RenewLoanModal = ({ loan, onClose, onConfirm }) => {
       return false;
     }
 
-    const maxRenewalDays = 30; // Máximo de días para renovación
+    const maxRenewalDays = 30;  
     const currentDueDate = new Date(loan.dueDate);
     const proposedDueDate = new Date(newDueDate);
     const daysDiff = Math.floor((proposedDueDate - currentDueDate) / (1000 * 60 * 60 * 24));
@@ -57,7 +56,7 @@ const RenewLoanModal = ({ loan, onClose, onConfirm }) => {
     setIsSubmitting(true);
     try {
       await onConfirm(loan.id, newDueDate);
-      // El cierre del modal se maneja en el callback
+      
     } catch (err) {
       setError(err.message || 'Error al renovar el préstamo');
     } finally {
@@ -81,7 +80,7 @@ const RenewLoanModal = ({ loan, onClose, onConfirm }) => {
 
   const calculateFineIfOverdue = () => {
     if (!isOverdue) return 0;
-    // $1 por día de retraso
+   
     return daysOverdue * 1;
   };
 
