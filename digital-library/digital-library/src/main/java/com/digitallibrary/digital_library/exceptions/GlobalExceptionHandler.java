@@ -147,8 +147,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGlobalException(
             Exception ex, WebRequest request) {
-        
-        // Log the exception for debugging
+          
         ex.printStackTrace();
         
         ApiResponse response = new ApiResponse();

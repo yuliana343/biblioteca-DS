@@ -1,6 +1,6 @@
 package com.digitallibrary.digital_library.models;
 
-import com.digitallibrary.digital_library.models.enums.LoanStatus; // ← AÑADE ESTE IMPORT
+import com.digitallibrary.digital_library.models.enums.LoanStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,11 +53,10 @@ public class Loan {
             loanDate = LocalDate.now();
         }
         if (dueDate == null) {
-            dueDate = loanDate.plusDays(14); // 2 semanas por defecto
+            dueDate = loanDate.plusDays(14);  
         }
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }

@@ -9,8 +9,7 @@ import java.util.Map;
 
 public class ExceptionUtils {
     
-    private ExceptionUtils() {
-        // Clase de utilidad, no instanciable
+    private ExceptionUtils() { 
     }
     
     public static Map<String, String> getValidationErrors(BindingResult bindingResult) {

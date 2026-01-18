@@ -41,7 +41,6 @@ const LoginForm = () => {
       ...prev,
       [name]: value
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -62,7 +61,6 @@ const LoginForm = () => {
     try {
       await login(formData.username, formData.password, rememberMe);
       
-      // Redirección basada en rol (se manejará en AuthContext)
       navigate('/dashboard');
       
     } catch (error) {

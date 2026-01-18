@@ -17,8 +17,7 @@ public class OperationNotAllowedException extends RuntimeException {
     public OperationNotAllowedException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    // Métodos factory estáticos para diferentes casos
+     
     public static OperationNotAllowedException forResource(String operation, String resource) {
         String message = String.format("No se permite %s en %s", operation, resource);
         return new OperationNotAllowedException(message);

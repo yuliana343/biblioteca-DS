@@ -32,8 +32,7 @@ public class Recommendation {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }

@@ -50,8 +50,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryResponse createCategory(CategoryResponse categoryRequest) {
-        // Verificar si ya existe una categoría con ese nombre
+    public CategoryResponse createCategory(CategoryResponse categoryRequest) { 
         if (categoryRepository.existsByName(categoryRequest.getName())) {
             throw new DuplicateResourceException("Categoría", "nombre", categoryRequest.getName());
         }
@@ -69,8 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse updateCategory(Long id, CategoryResponse categoryRequest) {
         Category category = categoryRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Categoría", id));
-        
-        // Verificar si el nombre cambió y si ya existe
+         
         if (!category.getName().equals(categoryRequest.getName()) && 
             categoryRepository.existsByName(categoryRequest.getName())) {
             throw new DuplicateResourceException("Categoría", "nombre", categoryRequest.getName());
@@ -88,8 +86,7 @@ public class CategoryServiceImpl implements CategoryService {
     public ApiResponse deleteCategory(Long id) {
         Category category = categoryRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Categoría", id));
-        
-        // Verificar si la categoría tiene libros asociados
+         
         if (!category.getBooks().isEmpty()) {
             return ApiResponse.error("No se puede eliminar la categoría porque tiene libros asociados");
         }
@@ -140,8 +137,7 @@ public class CategoryServiceImpl implements CategoryService {
         response.setDescription(category.getDescription());
         response.setCreatedAt(category.getCreatedAt());
         response.setBookCount(category.getBooks() != null ? category.getBooks().size() : 0);
-        
-        // Calcular número de préstamos para esta categoría
+         
         if (category.getBooks() != null) {
             int loanCount = category.getBooks().stream()
                 .mapToInt(book -> book.getLoans() != null ? book.getLoans().size() : 0)

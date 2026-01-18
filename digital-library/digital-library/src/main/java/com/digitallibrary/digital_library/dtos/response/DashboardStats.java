@@ -31,8 +31,7 @@ public class DashboardStats {
     
     private List<Map<String, Object>> monthlyStats;
     private List<Map<String, Object>> dailyActivity;
-
-    // Getters y Setters
+ 
     public Long getTotalBooks() {
         return totalBooks;
     }

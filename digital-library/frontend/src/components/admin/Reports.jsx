@@ -22,8 +22,7 @@ const Reports = () => {
 
   const fetchAvailableReports = async () => {
     setLoading(true);
-    try {
-      // Simulación de reportes disponibles
+    try { 
       const mockReports = [
         {
           id: 1,
@@ -110,8 +109,7 @@ const Reports = () => {
   };
 
   const fetchGeneratedReports = async () => {
-    try {
-      // Simulación de reportes generados
+    try { 
       const mockGenerated = [
         {
           id: 1,
@@ -163,7 +161,7 @@ const Reports = () => {
 
   const handleReportSelect = (report) => {
     setSelectedReport(report);
-    // Inicializar parámetros
+    
     const initialParams = {};
     report.params.forEach(param => {
       if (param.type === 'select') {
@@ -190,8 +188,7 @@ const Reports = () => {
     if (!selectedReport) return;
 
     setGenerating(true);
-    try {
-      // Simulación de generación de reporte
+    try { 
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       const newReport = {
@@ -207,8 +204,7 @@ const Reports = () => {
 
       setGeneratedReports(prev => [newReport, ...prev]);
       alert(`Reporte "${selectedReport.name}" generado exitosamente`);
-      
-      // Resetear selección
+       
       setSelectedReport(null);
       setReportParams({});
     } catch (error) {
@@ -220,7 +216,7 @@ const Reports = () => {
 
   const downloadReport = (report) => {
     alert(`Descargando reporte: ${report.name}`);
-    // Lógica de descarga real iría aquí
+     
   };
 
   const deleteReport = (reportId) => {
@@ -231,7 +227,7 @@ const Reports = () => {
 
   const scheduleReport = (report) => {
     alert(`Programando reporte: ${report.name}`);
-    // Lógica de programación iría aquí
+  
   };
 
   const getReportIcon = (category) => {

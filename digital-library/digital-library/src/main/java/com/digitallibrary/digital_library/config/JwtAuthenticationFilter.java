@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // Si no hay token, continúa sin autenticar
+       
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         String username = jwtUtil.extractUsername(token);
 
-        // Si hay username y aún no está autenticado
+      
         if (username != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null) {
 

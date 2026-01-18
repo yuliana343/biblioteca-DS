@@ -30,33 +30,28 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public List<BookResponse> getRecommendationsForUser(Long userId) {
-        // Obtener IDs de libros que el usuario ya ha prestado
+    public List<BookResponse> getRecommendationsForUser(Long userId) { 
         List<Long> userBookIds = loanHistoryRepository.findByUserId(userId)
             .stream()
             .map(loanHistory -> loanHistory.getBook().getId())
             .distinct()
             .collect(Collectors.toList());
-        
-        // Si no tiene historial, devolver libros populares
+         
         if (userBookIds.isEmpty()) {
             return getPopularRecommendations();
         }
-        
-        // Buscar libros similares
+         
         return getSimilarBooks(userBookIds);
     }
 
     private List<BookResponse> getSimilarBooks(List<Long> bookIds) {
-        // Obtener los libros
+     
         List<Book> userBooks = bookRepository.findAllById(bookIds);
-        
-        // Obtener todas las categorías de los libros del usuario
+         
         Set<Category> userCategories = userBooks.stream()
             .flatMap(book -> book.getCategories().stream())
             .collect(Collectors.toSet());
-        
-        // Buscar libros que compartan categorías
+         
         return bookRepository.findAll().stream()
             .filter(book -> !bookIds.contains(book.getId()))
             .filter(book -> book.getCategories().stream()
@@ -85,20 +80,17 @@ public class RecommendationServiceImpl implements RecommendationService {
         
         Book book = optionalBook.get();
         Set<Category> categories = book.getCategories();
-        
-        // Si no tiene categorías, devolver libros populares
+         
         if (categories.isEmpty()) {
             return getPopularRecommendations().stream()
                 .limit(5)
                 .collect(Collectors.toList());
         }
-        
-        // Obtener IDs de categorías
+         
         Set<Long> categoryIds = categories.stream()
             .map(Category::getId)
             .collect(Collectors.toSet());
-        
-        // Buscar libros que compartan categorías
+         
         return bookRepository.findAll().stream()
             .filter(b -> !b.getId().equals(bookId))
             .filter(b -> b.getCategories().stream()
@@ -140,7 +132,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         response.setTitle(book.getTitle());
         response.setIsbn(book.getIsbn());
         response.setAvailableCopies(book.getAvailableCopies());
-        // ... otros campos según tu BookResponse
+      
         return response;
     }
 }

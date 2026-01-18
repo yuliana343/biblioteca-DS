@@ -1,6 +1,6 @@
 package com.digitallibrary.digital_library.models;
 
-import com.digitallibrary.digital_library.models.enums.NotificationType; // ← AÑADE ESTE IMPORT
+import com.digitallibrary.digital_library.models.enums.NotificationType; 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -36,8 +36,7 @@ public class Notification {
     protected void onCreate() {
         sentAt = LocalDateTime.now();
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }

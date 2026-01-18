@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api")  // ← AÑADIR ESTA LÍNEA
+@RequestMapping("/api")  
 public class TestController {
 
-    @GetMapping("/test")  // ← Ahora la ruta completa será /api/test
+    @GetMapping("/test")   
     public Map<String, String> test() {
         Map<String, String> response = new HashMap<>();
         response.put("message", "¡Backend funcionando correctamente!");

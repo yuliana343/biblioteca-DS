@@ -30,21 +30,17 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest loginRequest) {
-
-        // 1️⃣ Buscar usuario
+ 
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
-        // 2️⃣ Verificar contraseña
+ 
         if (!passwordEncoder.matches(
                 loginRequest.getPassword(), user.getPassword())) {
             throw new RuntimeException("Credenciales inválidas");
         }
-
-        // 3️⃣ Generar JWT (SIMPLE Y FUNCIONAL)
+ 
         String token = jwtUtil.generateToken(user.getUsername());
-
-        // 4️⃣ Respuesta
+ 
         AuthResponse response = new AuthResponse();
         response.setToken(token);
         response.setUserId(user.getId());
@@ -90,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void validateToken(String token) {
-        // se validará en el filtro JWT
+       
     }
 
     @Override

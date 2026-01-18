@@ -15,26 +15,19 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    
-    // Buscar por nombre de usuario
+     
     Optional<User> findByUsername(String username);
-    
-    // Buscar por email
+     
     Optional<User> findByEmail(String email);
-    
-    // Buscar por DNI
+     
     Optional<User> findByDni(String dni);
-    
-    // Buscar por rol
+     
     Page<User> findByRole(UserRole role, Pageable pageable);
-    
-    // Buscar usuarios activos
+     
     Page<User> findByIsActiveTrue(Pageable pageable);
-    
-    // Buscar usuarios inactivos
+     
     Page<User> findByIsActiveFalse(Pageable pageable);
-    
-    // Búsqueda por múltiples campos
+     
     @Query("SELECT u FROM User u " +
            "WHERE (:role IS NULL OR u.role = :role) " +
            "AND (:search IS NULL OR " +
@@ -46,29 +39,22 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<User> searchUsers(@Param("role") UserRole role,
                           @Param("search") String search,
                           Pageable pageable);
-    
-    // Verificar si existe por username
+     
     boolean existsByUsername(String username);
-    
-    // Verificar si existe por email
+     
     boolean existsByEmail(String email);
-    
-    // Verificar si existe por DNI
+     
     boolean existsByDni(String dni);
-    
-    // Contar usuarios por rol
+     
     Long countByRole(UserRole role);
-    
-    // Contar usuarios activos
+     
     Long countByIsActiveTrue();
-    
-    // Buscar usuarios con préstamos vencidos
+     
     @Query("SELECT DISTINCT u FROM User u " +
            "JOIN u.loans l " +
            "WHERE l.status = 'OVERDUE'")
     List<User> findUsersWithOverdueLoans();
-    
-    // Buscar usuarios más activos
+     
     @Query("SELECT u FROM User u " +
            "WHERE u.id IN (" +
            "    SELECT l.user.id FROM Loan l " +

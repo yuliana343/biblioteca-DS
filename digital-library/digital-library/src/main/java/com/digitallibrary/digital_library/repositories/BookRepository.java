@@ -13,31 +13,23 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    
-    // Buscar por ISBN
+     
     Optional<Book> findByIsbn(String isbn);
-    
-    // Buscar por título (contiene)
+     
     Page<Book> findByTitleContainingIgnoreCase(String title, Pageable pageable);
-    
-    // Buscar por autor
+     
     @Query("SELECT DISTINCT b FROM Book b JOIN b.authors a WHERE LOWER(a.name) LIKE LOWER(CONCAT('%', :authorName, '%'))")
     Page<Book> findByAuthorNameContaining(@Param("authorName") String authorName, Pageable pageable);
-    
-    // Buscar por categoría
+     
     @Query("SELECT DISTINCT b FROM Book b JOIN b.categories c WHERE c.id = :categoryId")
     Page<Book> findByCategoryId(@Param("categoryId") Long categoryId, Pageable pageable);
-    
-    // Buscar por año de publicación
+     
     Page<Book> findByPublicationYear(Integer publicationYear, Pageable pageable);
-    
-    // Buscar por idioma
+     
     Page<Book> findByLanguageContainingIgnoreCase(String language, Pageable pageable);
-    
-    // Buscar libros disponibles
+     
     Page<Book> findByAvailableCopiesGreaterThan(Integer minCopies, Pageable pageable);
-    
-    // Búsqueda avanzada
+     
     @Query("SELECT DISTINCT b FROM Book b " +
            "LEFT JOIN b.authors a " +
            "LEFT JOIN b.categories c " +
@@ -52,8 +44,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                           @Param("publicationYear") Integer publicationYear,
                           @Param("language") String language,
                           Pageable pageable);
-    
-    // Búsqueda pública
+     
     @Query("SELECT DISTINCT b FROM Book b " +
            "LEFT JOIN b.authors a " +
            "LEFT JOIN b.categories c " +
@@ -68,8 +59,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                            @Param("category") String category,
                            @Param("author") String author,
                            Pageable pageable);
-    
-    // Libros más populares por préstamos
+     
     @Query("SELECT b FROM Book b " +
            "WHERE b.id IN (" +
            "    SELECT l.book.id FROM Loan l " +
@@ -80,13 +70,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findPopularBooks(@Param("startDate") java.time.LocalDate startDate,
                                @Param("endDate") java.time.LocalDate endDate,
                                Pageable pageable);
-    
-    // Contar libros disponibles
+     
     Long countByAvailableCopiesGreaterThan(Integer minCopies);
-    
-    // Verificar si existe por ISBN
+     
     boolean existsByIsbn(String isbn);
-    
-    // Buscar libros con menos de X copias disponibles
+     
     List<Book> findByAvailableCopiesLessThan(Integer threshold);
 }

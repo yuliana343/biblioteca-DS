@@ -1,4 +1,4 @@
-// services/auth/AuthContext.jsx
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import authService from '../api/authService';
 
@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Verificar si hay usuario al cargar la app
   useEffect(() => {
     const initAuth = async () => {
       try {
@@ -38,7 +37,6 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
-  // Login
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
@@ -55,7 +53,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login con demo
   const demoLogin = async (role = 'USER') => {
     setLoading(true);
     setError(null);

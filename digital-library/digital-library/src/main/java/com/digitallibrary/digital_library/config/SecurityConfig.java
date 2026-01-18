@@ -61,7 +61,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 🔐 Authentication Provider (User + Password)
+   
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -70,7 +70,7 @@ public class SecurityConfig {
         return provider;
     }
 
-    // 🔑 Authentication Manager
+
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config) throws Exception {

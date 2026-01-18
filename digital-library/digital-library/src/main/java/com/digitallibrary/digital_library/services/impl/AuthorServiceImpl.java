@@ -79,8 +79,7 @@ public class AuthorServiceImpl implements AuthorService {
     public ApiResponse deleteAuthor(Long id) {
         Author author = authorRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Autor", id));
-        
-        // Verificar si el autor tiene libros asociados
+         
         if (!author.getBooks().isEmpty()) {
             return ApiResponse.error("No se puede eliminar el autor porque tiene libros asociados");
         }

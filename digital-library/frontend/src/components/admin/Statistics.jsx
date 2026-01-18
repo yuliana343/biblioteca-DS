@@ -4,7 +4,7 @@ import './Admin.css';
 
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState('month'); // day, week, month, year, custom
+  const [timeRange, setTimeRange] = useState('month'); 
   const [selectedMetric, setSelectedMetric] = useState('overview');
   const [comparisonPeriod, setComparisonPeriod] = useState('previous');
   const [stats, setStats] = useState(null);
@@ -23,7 +23,7 @@ const Statistics = () => {
   const fetchStatistics = async () => {
     setLoading(true);
     try {
-      // Simulación de datos estadísticos
+      
       const mockStats = {
         overview: {
           totalLoans: 1245,
@@ -53,8 +53,7 @@ const Statistics = () => {
           peakSeason: 'Otoño'
         }
       };
-
-      // Datos para gráficos
+ 
       const mockChartData = {
         loansByDay: Array.from({ length: 7 }, (_, i) => ({
           day: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'][i],
@@ -78,8 +77,7 @@ const Statistics = () => {
           returns: Math.floor(Math.random() * 20) + 5
         }))
       };
-
-      // Top items
+ 
       const mockTopItems = {
         books: [
           { id: 1, title: 'Cien años de soledad', author: 'García Márquez', loans: 245, rating: 4.8 },

@@ -25,7 +25,7 @@ public class Statistic {
     @Column(name = "view_count")
     private Integer viewCount = 0;
     
-    @Column(name = "month_year", length = 7) // Formato: YYYY-MM
+    @Column(name = "month_year", length = 7)
     private String monthYear;
     
     @Column(name = "created_at")
@@ -35,8 +35,7 @@ public class Statistic {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }

@@ -1,6 +1,6 @@
 package com.digitallibrary.digital_library.models;
 
-import com.digitallibrary.digital_library.models.enums.ReservationStatus; // ← AÑADE ESTE IMPORT
+import com.digitallibrary.digital_library.models.enums.ReservationStatus; 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -44,11 +44,10 @@ public class Reservation {
         reservationDate = LocalDateTime.now();
         createdAt = LocalDateTime.now();
         if (expiryDate == null) {
-            expiryDate = reservationDate.plusHours(48); // 48 horas por defecto
+            expiryDate = reservationDate.plusHours(48);  
         }
     }
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }

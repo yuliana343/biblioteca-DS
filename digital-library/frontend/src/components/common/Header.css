@@ -1,4 +1,4 @@
-/* src/components/common/Header.css */
+
 .header {
   position: sticky;
   top: 0;
@@ -77,14 +77,12 @@
   white-space: nowrap;
 }
 
-/* Barra de búsqueda */
 .header-search {
   flex: 1;
   max-width: 500px;
   margin: 0 32px;
 }
 
-/* Navegación */
 .header-nav {
   display: flex;
   align-items: center;
@@ -135,7 +133,6 @@
   display: inline;
 }
 
-/* Acciones de usuario */
 .user-actions {
   display: flex;
   align-items: center;

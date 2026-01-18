@@ -14,8 +14,7 @@ public class AuthorResponse {
     private LocalDateTime createdAt;
     
     private Integer bookCount;
-
-    // Getters y Setters
+ 
     public Long getId() {
         return id;
     }

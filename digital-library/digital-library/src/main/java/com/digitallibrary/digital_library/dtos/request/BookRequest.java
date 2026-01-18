@@ -40,7 +40,7 @@ public class BookRequest {
     @NotNull(message = "Debe incluir al menos una categoría")
     private List<Long> categoryIds;
 
-    // Getters y Setters
+  
     public String getTitle() {
         return title;
     }

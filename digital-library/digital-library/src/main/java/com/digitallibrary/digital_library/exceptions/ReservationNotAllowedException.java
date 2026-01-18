@@ -3,7 +3,11 @@ package com.digitallibrary.digital_library.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+231165-design-patch-1
 @ResponseStatus(HttpStatus.CONFLICT)  
+
+@ResponseStatus(HttpStatus.CONFLICT) 
+ main
 public class ReservationNotAllowedException extends RuntimeException {
     
     public ReservationNotAllowedException() {
@@ -17,8 +21,7 @@ public class ReservationNotAllowedException extends RuntimeException {
     public ReservationNotAllowedException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    // Métodos factory estáticos para diferentes casos de reserva
+     
     public static ReservationNotAllowedException bookNotAvailable(Long bookId) {
         String message = String.format("El libro con ID %d no está disponible para reserva", bookId);
         return new ReservationNotAllowedException(message);
