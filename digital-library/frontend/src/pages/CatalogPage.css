@@ -1,4 +1,4 @@
-/* CatalogPage.css */
+
 .catalog-page {
   padding: 20px;
   max-width: 1400px;
@@ -7,7 +7,6 @@
   min-height: 100vh;
 }
 
-/* Header */
 .catalog-header {
   background: white;
   border-radius: 20px;
@@ -82,7 +81,6 @@
   color: #3498db;
 }
 
-/* Active Filters */
 .active-filters {
   background: white;
   border-radius: 15px;
@@ -133,7 +131,6 @@
   opacity: 1;
 }
 
-/* Main Content */
 .catalog-content {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -152,7 +149,6 @@
   gap: 20px;
 }
 
-/* Controls */
 .catalog-controls {
   background: white;
   border-radius: 15px;
@@ -194,7 +190,6 @@
   border-color: #3498db;
 }
 
-/* Loading & Empty States */
 .catalog-loading {
   background: white;
   border-radius: 15px;
@@ -230,7 +225,6 @@
   color: #7f8c8d;
 }
 
-/* Books Grid */
 .books-grid-container {
   background: white;
   border-radius: 15px;
@@ -241,7 +235,6 @@
   gap: 25px;
 }
 
-/* Pagination */
 .catalog-pagination {
   background: white;
   border-radius: 15px;
@@ -250,7 +243,6 @@
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Statistics */
 .catalog-stats {
   background: white;
   border-radius: 15px;
@@ -293,7 +285,6 @@
   font-size: 16px;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .catalog-content {
     grid-template-columns: 1fr;
