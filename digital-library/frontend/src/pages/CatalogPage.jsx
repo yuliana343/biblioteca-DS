@@ -16,7 +16,6 @@ const CatalogPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   
-  // Estado para filtros
   const [filters, setFilters] = useState({
     search: searchParams.get('search') || '',
     category: searchParams.get('category') || 'all',
@@ -34,7 +33,6 @@ const CatalogPage = () => {
   }, [filters, currentPage]);
 
   useEffect(() => {
-    // Actualizar URL cuando cambian los filtros
     const params = {};
     if (filters.search) params.search = filters.search;
     if (filters.category !== 'all') params.category = filters.category;
@@ -50,7 +48,6 @@ const CatalogPage = () => {
   const fetchBooks = async () => {
     setLoading(true);
     try {
-      // Simulación de datos
       const mockBooks = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
         title: `Libro ${i + 1}: ${['El Gran Libro', 'Historia de', 'Ciencia Avanzada', 'Arte Moderno'][i % 4]}`,
@@ -68,7 +65,6 @@ const CatalogPage = () => {
         language: ['Español', 'Inglés', 'Francés'][i % 3]
       }));
 
-      // Aplicar filtros
       let filtered = [...mockBooks];
       
       if (filters.search) {
@@ -96,7 +92,6 @@ const CatalogPage = () => {
         );
       }
       
-      // Aplicar ordenación
       filtered.sort((a, b) => {
         switch (filters.sortBy) {
           case 'title':
@@ -114,7 +109,6 @@ const CatalogPage = () => {
         }
       });
 
-      // Paginación
       const total = filtered.length;
       const totalPages = Math.ceil(total / pageSize);
       const startIndex = (currentPage - 1) * pageSize;
