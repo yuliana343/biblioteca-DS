@@ -41,7 +41,6 @@ const AdminPage = () => {
     }
   };
 
-  // Si el usuario no es admin, redirigir
   if (user?.role !== 'ADMIN') {
     return <Navigate to="/" replace />;
   }
