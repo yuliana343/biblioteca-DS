@@ -8,13 +8,11 @@ import Statistics from '../components/admin/Statistics';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ProtectedRoute from '../services/auth/ProtectedRoute';
 import './AdminPage.css';
-
 const AdminPage = () => {
   const { user } = useAuth();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState(null);
-
   useEffect(() => {
     fetchAdminStats();
   }, []);
@@ -306,5 +304,4 @@ const AdminPage = () => {
     </div>
   );
 };
-
 export default AdminPage;
