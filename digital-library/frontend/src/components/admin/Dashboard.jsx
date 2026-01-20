@@ -1,1 +1,537 @@
+import React, { useState, useEffect } from 'react';
+import LoadingSpinner from '../common/LoadingSpinner';
+import './Admin.css';
 
+/**
+ * Componente Dashboard - Panel de administración principal
+ * Muestra estadísticas, métricas y actividad del sistema de biblioteca
+ */
+const Dashboard = () => {
+  // Estado para las estadísticas principales
+  const [stats, setStats] = useState(null);
+  
+  // Estado para el registro de actividad reciente
+  const [recentActivity, setRecentActivity] = useState([]);
+  
+  // Estado para controlar la carga de datos
+  const [loading, setLoading] = useState(true);
+  
+  // Estado para el rango de tiempo seleccionado (filtro)
+  const [timeRange, setTimeRange] = useState('today'); // Opciones: today, week, month, year
+  
+  // Estado para la métrica seleccionada en los gráficos
+  const [selectedMetric, setSelectedMetric] = useState('overview');
+
+  /**
+   * Efecto que se ejecuta al montar el componente y cuando cambia timeRange
+   * Carga los datos del dashboard según el rango de tiempo seleccionado
+   */
+  useEffect(() => {
+    fetchDashboardData();
+  }, [timeRange]); // Dependencia: se ejecuta cuando timeRange cambia
+
+  /**
+   * Función para obtener los datos del dashboard
+   * Actualmente usa datos mock (simulados) para demostración
+   */
+  const fetchDashboardData = async () => {
+    setLoading(true); // Activa el estado de carga
+    
+    try {
+      // Datos mock para estadísticas - en una app real vendrían de una API
+      const mockStats = {
+        totalBooks: 1234,
+        totalUsers: 567,
+        activeLoans: 89,
+        pendingReservations: 23,
+        overdueLoans: 12,
+        availableBooks: 987,
+        newBooksThisMonth: 45,
+        averageLoanDuration: 14.5,
+        userSatisfaction: 4.8,
+        systemUptime: 99.9
+      };
+
+      // Datos mock para actividad reciente
+      const mockActivity = [
+        { id: 1, type: 'loan', user: 'Juan Pérez', book: 'Cien años de soledad', time: '10:30 AM', status: 'completed' },
+        { id: 2, type: 'reservation', user: 'María García', book: 'Harry Potter', time: '11:15 AM', status: 'pending' },
+        { id: 3, type: 'return', user: 'Carlos López', book: 'El principito', time: '12:00 PM', status: 'completed' },
+        { id: 4, type: 'new_book', user: 'Admin', book: 'Nuevo libro añadido', time: '01:30 PM', status: 'completed' },
+        { id: 5, type: 'user_registration', user: 'Ana Martínez', book: 'Nuevo usuario', time: '02:45 PM', status: 'completed' }
+      ];
+
+      // Simula una llamada a API con setTimeout
+      setTimeout(() => {
+        setStats(mockStats);
+        setRecentActivity(mockActivity);
+        setLoading(false); // Desactiva el estado de carga
+      }, 1000);
+      
+    } catch (error) {
+      console.error('Error loading dashboard:', error);
+      setLoading(false); // Desactiva el estado de carga incluso en error
+    }
+  };
+
+  /**
+   * Devuelve la tendencia de una métrica específica
+   * @param {string} metric - Nombre de la métrica
+   * @returns {object} Objeto con valor y si es positivo
+   */
+  const getMetricTrend = (metric) => {
+    // Datos mock de tendencias - en una app real se calcularían
+    const trends = {
+      totalBooks: { value: '+12%', positive: true },
+      totalUsers: { value: '+8%', positive: true },
+      activeLoans: { value: '-3%', positive: false },
+      overdueLoans: { value: '+5%', positive: false },
+      userSatisfaction: { value: '+0.2', positive: true }
+    };
+    
+    // Retorna la tendencia o un valor por defecto si no existe
+    return trends[metric] || { value: '0%', positive: true };
+  };
+
+  /**
+   * Devuelve el ícono correspondiente al tipo de actividad
+   * @param {string} type - Tipo de actividad
+   * @returns {string} Emoji del ícono
+   */
+  const getActivityIcon = (type) => {
+    const icons = {
+      loan: '📖',
+      return: '📚',
+      reservation: '📅',
+      new_book: '➕',
+      user_registration: '👤',
+      renewal: '🔄',
+      fine: '💰'
+    };
+    
+    return icons[type] || '📊'; // Ícono por defecto si no se encuentra
+  };
+
+  /**
+   * Devuelve el color correspondiente al tipo de actividad
+   * @param {string} type - Tipo de actividad
+   * @returns {string} Código hexadecimal del color
+   */
+  const getActivityColor = (type) => {
+    const colors = {
+      loan: '#4fc3f7',
+      return: '#4caf50',
+      reservation: '#ff9800',
+      new_book: '#9c27b0',
+      user_registration: '#2196f3',
+      renewal: '#00bcd4',
+      fine: '#f44336'
+    };
+    
+    return colors[type] || '#666'; // Color por defecto si no se encuentra
+  };
+
+  // Mostrar spinner de carga mientras se obtienen los datos
+  if (loading) {
+    return (
+      <div className="admin-dashboard">
+        <div className="dashboard-loading">
+          <LoadingSpinner message="Cargando dashboard..." />
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Renderizado principal del dashboard
+   * Dividido en secciones lógicas:
+   * 1. Header con controles
+   * 2. Métricas principales
+   * 3. Gráficos y estadísticas
+   * 4. Actividad reciente y alertas
+   * 5. Acciones rápidas
+   * 6. Estado del sistema
+   */
+  return (
+    <div className="admin-dashboard">
+      {/* ========== HEADER DEL DASHBOARD ========== */}
+      <div className="dashboard-header">
+        <div className="header-left">
+          <h1>Panel de Administración</h1>
+          <p className="subtitle">Vista general del sistema de biblioteca</p>
+        </div>
+        <div className="header-right">
+          {/* Selector de rango de tiempo */}
+          <div className="time-selector">
+            <select 
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="time-select"
+            >
+              <option value="today">Hoy</option>
+              <option value="week">Esta semana</option>
+              <option value="month">Este mes</option>
+              <option value="year">Este año</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </div>
+          
+          {/* Botón para actualizar datos manualmente */}
+          <button className="btn btn-primary">
+            <span className="btn-icon">🔄</span>
+            Actualizar
+          </button>
+        </div>
+      </div>
+
+      {/* ========== MÉTRICAS PRINCIPALES ========== */}
+      <div className="metrics-grid">
+        {/* Tarjeta: Libros Totales */}
+        <div className="metric-card primary">
+          <div className="metric-icon">📚</div>
+          <div className="metric-content">
+            <div className="metric-value">{stats.totalBooks.toLocaleString()}</div>
+            <div className="metric-label">Libros Totales</div>
+            <div className="metric-trend">
+              <span className={`trend-value ${getMetricTrend('totalBooks').positive ? 'positive' : 'negative'}`}>
+                {getMetricTrend('totalBooks').value}
+              </span>
+              <span className="trend-period"> vs. mes anterior</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tarjeta: Usuarios Registrados */}
+        <div className="metric-card success">
+          <div className="metric-icon">👥</div>
+          <div className="metric-content">
+            <div className="metric-value">{stats.totalUsers.toLocaleString()}</div>
+            <div className="metric-label">Usuarios Registrados</div>
+            <div className="metric-trend">
+              <span className={`trend-value ${getMetricTrend('totalUsers').positive ? 'positive' : 'negative'}`}>
+                {getMetricTrend('totalUsers').value}
+              </span>
+              <span className="trend-period"> vs. mes anterior</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tarjeta: Préstamos Activos */}
+        <div className="metric-card warning">
+          <div className="metric-icon">📖</div>
+          <div className="metric-content">
+            <div className="metric-value">{stats.activeLoans}</div>
+            <div className="metric-label">Préstamos Activos</div>
+            <div className="metric-trend">
+              <span className={`trend-value ${getMetricTrend('activeLoans').positive ? 'positive' : 'negative'}`}>
+                {getMetricTrend('activeLoans').value}
+              </span>
+              <span className="trend-period"> vs. semana anterior</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tarjeta: Reservas Pendientes */}
+        <div className="metric-card info">
+          <div className="metric-icon">📅</div>
+          <div className="metric-content">
+            <div className="metric-value">{stats.pendingReservations}</div>
+            <div className="metric-label">Reservas Pendientes</div>
+            <div className="metric-trend">
+              <span className="trend-value positive">-2</span>
+              <span className="trend-period"> desde ayer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== GRÁFICOS Y ESTADÍSTICAS ========== */}
+      <div className="charts-section">
+        {/* Tarjeta de gráficos interactivos */}
+        <div className="chart-card">
+          <div className="chart-header">
+            <h3>📈 Actividad del Sistema</h3>
+            <div className="chart-actions">
+              {/* Botones para cambiar la métrica visualizada */}
+              <button 
+                className={`chart-btn ${selectedMetric === 'overview' ? 'active' : ''}`}
+                onClick={() => setSelectedMetric('overview')}
+              >
+                Resumen
+              </button>
+              <button 
+                className={`chart-btn ${selectedMetric === 'loans' ? 'active' : ''}`}
+                onClick={() => setSelectedMetric('loans')}
+              >
+                Préstamos
+              </button>
+              <button 
+                className={`chart-btn ${selectedMetric === 'users' ? 'active' : ''}`}
+                onClick={() => setSelectedMetric('users')}
+              >
+                Usuarios
+              </button>
+            </div>
+          </div>
+          
+          {/* Placeholder para gráfico (en implementación real aquí iría un gráfico) */}
+          <div className="chart-placeholder">
+            <div className="placeholder-content">
+              <span className="placeholder-icon">📊</span>
+              <p>Gráfica de actividad del sistema</p>
+              <small>Mostrando datos para: {timeRange}</small>
+            </div>
+          </div>
+          
+          {/* Leyenda del gráfico */}
+          <div className="chart-legend">
+            <div className="legend-item">
+              <span className="legend-color" style={{background: '#4fc3f7'}}></span>
+              <span className="legend-text">Préstamos</span>
+            </div>
+            <div className="legend-item">
+              <span className="legend-color" style={{background: '#4caf50'}}></span>
+              <span className="legend-text">Devoluciones</span>
+            </div>
+            <div className="legend-item">
+              <span className="legend-color" style={{background: '#ff9800'}}></span>
+              <span className="legend-text">Reservas</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tarjeta de métricas de rendimiento */}
+        <div className="stats-card">
+          <div className="stats-header">
+            <h3>📊 Métricas de Rendimiento</h3>
+          </div>
+          <div className="stats-grid">
+            {/* Item: Libros Disponibles */}
+            <div className="stat-item">
+              <div className="stat-label">Libros Disponibles</div>
+              <div className="stat-value">{stats.availableBooks}</div>
+              <div className="stat-percentage">80% del total</div>
+            </div>
+            
+            {/* Item: Préstamos Vencidos */}
+            <div className="stat-item">
+              <div className="stat-label">Préstamos Vencidos</div>
+              <div className="stat-value error">{stats.overdueLoans}</div>
+              <div className="stat-percentage">13.5% de activos</div>
+            </div>
+            
+            {/* Item: Nuevos Libros este Mes */}
+            <div className="stat-item">
+              <div className="stat-label">Nuevos Libros (Mes)</div>
+              <div className="stat-value">{stats.newBooksThisMonth}</div>
+              <div className="stat-percentage">+15 desde ayer</div>
+            </div>
+            
+            {/* Item: Duración Promedio de Préstamo */}
+            <div className="stat-item">
+              <div className="stat-label">Duración Promedio Préstamo</div>
+              <div className="stat-value">{stats.averageLoanDuration} días</div>
+              <div className="stat-percentage">+1.2 días vs promedio</div>
+            </div>
+            
+            {/* Item: Satisfacción de Usuarios */}
+            <div className="stat-item">
+              <div className="stat-label">Satisfacción Usuarios</div>
+              <div className="stat-value">{stats.userSatisfaction}/5</div>
+              <div className="stat-percentage">96% satisfechos</div>
+            </div>
+            
+            {/* Item: Disponibilidad del Sistema */}
+            <div className="stat-item">
+              <div className="stat-label">Disponibilidad Sistema</div>
+              <div className="stat-value">{stats.systemUptime}%</div>
+              <div className="stat-percentage">7 días sin interrupciones</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== ACTIVIDAD RECIENTE Y ALERTAS ========== */}
+      <div className="activity-section">
+        {/* Sección de actividad reciente */}
+        <div className="recent-activity">
+          <div className="activity-header">
+            <h3>🔄 Actividad Reciente</h3>
+            <button className="btn btn-outline btn-sm">
+              Ver todo →
+            </button>
+          </div>
+          
+          {/* Lista de actividades */}
+          <div className="activity-list">
+            {recentActivity.map(activity => (
+              <div key={activity.id} className="activity-item">
+                {/* Ícono con color según tipo de actividad */}
+                <div className="activity-icon" style={{background: getActivityColor(activity.type)}}>
+                  {getActivityIcon(activity.type)}
+                </div>
+                
+                {/* Contenido de la actividad */}
+                <div className="activity-content">
+                  <div className="activity-title">
+                    {/* Título según tipo de actividad */}
+                    {activity.type === 'loan' && 'Nuevo préstamo registrado'}
+                    {activity.type === 'return' && 'Libro devuelto'}
+                    {activity.type === 'reservation' && 'Nueva reserva'}
+                    {activity.type === 'new_book' && 'Nuevo libro añadido'}
+                    {activity.type === 'user_registration' && 'Nuevo usuario registrado'}
+                  </div>
+                  <div className="activity-details">
+                    <span className="user">{activity.user}</span>
+                    {activity.book && <span className="book">• {activity.book}</span>}
+                  </div>
+                </div>
+                
+                {/* Información de tiempo y estado */}
+                <div className="activity-time">
+                  <span className="time">{activity.time}</span>
+                  <span className={`status ${activity.status}`}>{activity.status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Sección de alertas y notificaciones */}
+        <div className="alerts-card">
+          <div className="alerts-header">
+            <h3>⚠️ Alertas y Notificaciones</h3>
+            <span className="alerts-count">3</span> {/* Contador de alertas */}
+          </div>
+          
+          {/* Lista de alertas */}
+          <div className="alerts-list">
+            {/* Alerta crítica */}
+            <div className="alert-item critical">
+              <div className="alert-icon">🔴</div>
+              <div className="alert-content">
+                <div className="alert-title">Préstamos vencidos críticos</div>
+                <div className="alert-desc">5 préstamos con más de 30 días de retraso</div>
+              </div>
+              <button className="btn btn-sm btn-outline">Ver</button>
+            </div>
+            
+            {/* Alerta de advertencia */}
+            <div className="alert-item warning">
+              <div className="alert-icon">🟡</div>
+              <div className="alert-content">
+                <div className="alert-title">Libros agotados</div>
+                <div className="alert-desc">12 libros con 0 copias disponibles</div>
+              </div>
+              <button className="btn btn-sm btn-outline">Reponer</button>
+            </div>
+            
+            {/* Alerta informativa */}
+            <div className="alert-item info">
+              <div className="alert-icon">🔵</div>
+              <div className="alert-content">
+                <div className="alert-title">Reservas por expirar</div>
+                <div className="alert-desc">8 reservas expiran en las próximas 24h</div>
+              </div>
+              <button className="btn btn-sm btn-outline">Notificar</button>
+            </div>
+          </div>
+          
+          {/* Pie de página de alertas */}
+          <div className="alerts-footer">
+            <button className="btn btn-outline btn-block">
+              <span className="btn-icon">🔔</span>
+              Configurar alertas
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ========== ACCIONES RÁPIDAS ========== */}
+      <div className="quick-actions-section">
+        <h3>🚀 Acciones Rápidas</h3>
+        <div className="quick-actions-grid">
+          {/* Botón: Agregar Libro */}
+          <button className="quick-action">
+            <span className="action-icon">➕</span>
+            <span className="action-text">Agregar Libro</span>
+          </button>
+          
+          {/* Botón: Registrar Usuario */}
+          <button className="quick-action">
+            <span className="action-icon">👤</span>
+            <span className="action-text">Registrar Usuario</span>
+          </button>
+          
+          {/* Botón: Nuevo Préstamo */}
+          <button className="quick-action">
+            <span className="action-icon">📖</span>
+            <span className="action-text">Nuevo Préstamo</span>
+          </button>
+          
+          {/* Botón: Generar Reporte */}
+          <button className="quick-action">
+            <span className="action-icon">📊</span>
+            <span className="action-text">Generar Reporte</span>
+          </button>
+          
+          {/* Botón: Enviar Notificaciones */}
+          <button className="quick-action">
+            <span className="action-icon">📧</span>
+            <span className="action-text">Enviar Notificaciones</span>
+          </button>
+          
+          {/* Botón: Configuración */}
+          <button className="quick-action">
+            <span className="action-icon">⚙️</span>
+            <span className="action-text">Configuración</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ========== ESTADO DEL SISTEMA ========== */}
+      <div className="system-status">
+        <h3>🖥️ Estado del Sistema</h3>
+        <div className="status-grid">
+          {/* Estado: Servidor Principal */}
+          <div className="status-item online">
+            <div className="status-indicator"></div>
+            <div className="status-info">
+              <div className="status-label">Servidor Principal</div>
+              <div className="status-value">En línea</div>
+            </div>
+          </div>
+          
+          {/* Estado: Base de Datos */}
+          <div className="status-item online">
+            <div className="status-indicator"></div>
+            <div className="status-info">
+              <div className="status-label">Base de Datos</div>
+              <div className="status-value">Sincronizado</div>
+            </div>
+          </div>
+          
+          {/* Estado: Servicio de Email */}
+          <div className="status-item warning">
+            <div className="status-indicator"></div>
+            <div className="status-info">
+              <div className="status-label">Servicio de Email</div>
+              <div className="status-value">Latencia alta</div>
+            </div>
+          </div>
+          
+          {/* Estado: Almacenamiento */}
+          <div className="status-item online">
+            <div className="status-indicator"></div>
+            <div className="status-info">
+              <div className="status-label">Almacenamiento</div>
+              <div className="status-value">85% usado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;
