@@ -3,7 +3,11 @@ package com.digitallibrary.digital_library.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+231165-design-patch-1
+@ResponseStatus(HttpStatus.CONFLICT)  
+
 @ResponseStatus(HttpStatus.CONFLICT) 
+ main
 public class ReservationNotAllowedException extends RuntimeException {
     
     public ReservationNotAllowedException() {
